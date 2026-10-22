@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1526">
+  <meta name="description" content="A thoughtfully designed US dollar and Chinese yuan currency converter using daily published exchange rates.">
+  <title>Dollar ↔ Yuan — Currency Studio</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Currency Studio home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="14" fill="url(#logo-gradient)"/>
+            <path d="M13 19.5C15 15.9 18.7 14 23.1 14H34M34 14L29.6 9.5M34 14L29.6 18.5M35 28.5C33 32.1 29.3 34 24.9 34H14M14 34L18.4 29.5M14 34L18.4 38.5" stroke="#092236" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs><linearGradient id="logo-gradient" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#a7f6b6"/><stop offset="1" stop-color="#4cdfd0"/></linearGradient></defs>
+          </svg>
+        </span>
+        <span class="brand-type"><strong>currency<span class="brand-dot">.</span>studio</strong><small>THE EVERYDAY EXCHANGE</small></span>
+      </a>
+      <span class="header-badge"><span class="pulse-dot" aria-hidden="true"></span> DAILY REFERENCE RATES</span>
+    </header>
+
+    <main id="top">
+      <div class="hero-layout">
+        <section class="hero-copy" aria-labelledby="page-title">
+          <p class="eyebrow"><span class="eyebrow-line"></span> SIMPLE MONEY, BEAUTIFULLY MADE</p>
+          <h1 id="page-title">Every dollar<br>has a <span class="hero-highlight">destination<span class="period">.</span></span></h1>
+          <p class="hero-description">From New York to Beijing, convert between US dollars and Chinese yuan with clarity and confidence.</p>
+          <div class="language-pill"><span class="lang-icon" aria-hidden="true">文</span><span><strong>美元 ↔ 人民币</strong><small>US Dollar · Chinese Yuan</small></span></div>
+
+          <div class="hero-stats" aria-label="Converter features">
+            <div class="stat"><strong>No signup</strong><span>Just the numbers</span></div>
+            <div class="stat-separator" aria-hidden="true"></div>
+            <div class="stat"><strong>No API key</strong><span>Free to explore</span></div>
+            <div class="stat-separator" aria-hidden="true"></div>
+            <div class="stat"><strong>Two-way</strong><span>USD and CNY</span></div>
+          </div>
+        </section>
+
+        <section class="converter-card" aria-labelledby="converter-title">
+          <div class="card-topline"><span class="card-eyebrow">THE CONVERTER</span><span class="card-top-icon" aria-hidden="true">↗</span></div>
+          <div class="card-head"><div><h2 id="converter-title">Make your conversion</h2><p>Enter an amount to get started.</p></div></div>
+
+          <div class="currency-field">
+            <div class="field-heading"><label for="amount">You send</label><span class="field-hint">ENTER AN AMOUNT</span></div>
+            <div class="currency-input-row">
+              <input id="amount" type="number" inputmode="decimal" min="0" max="1000000000000" step="any" value="100" autocomplete="off" aria-describedby="amount-hint">
+              <span class="currency-token"><span id="from-flag" class="currency-flag" aria-hidden="true">🇺🇸</span><span id="from-code">USD</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 6 3.5 3.5L11.5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+            </div>
+          </div>
+
+          <div class="swap-row"><div class="swap-line"></div><button type="button" id="swap-button" class="swap-button" title="Reverse conversion" aria-label="Swap from and to currencies"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="swap-line"></div></div>
+
+          <div class="currency-field result-field">
+            <div class="field-heading"><span>You receive</span><span class="field-hint">ESTIMATED VALUE</span></div>
+            <div class="currency-input-row">
+              <output id="converted-amount" class="result-number" aria-live="polite" aria-atomic="true">—</output>
+              <span class="currency-token"><span id="to-flag" class="currency-flag" aria-hidden="true">🇨🇳</span><span id="to-code">CNY</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 6 3.5 3.5L11.5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+            </div>
+          </div>
+
+          <div class="rate-section"><div class="rate-indicator"><span class="rate-icon" aria-hidden="true">◎</span><span id="rate-description">Fetching the latest available rate…</span></div><button type="button" id="refresh-button" class="refresh-button" title="Refresh exchange rate" aria-label="Refresh exchange rate"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.2 6M20 4v7h-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+          <div class="card-bottom"><span id="rate-date">Checking published rate…</span><button type="button" class="copy-button" id="copy-button" disabled><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="1.8"/></svg><span id="copy-label">Copy result</span></button></div>
+          <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+
+      <section class="info-strip" aria-label="How it works">
+        <div class="info-intro"><span class="mini-label">A LITTLE MORE CONTEXT</span><h2>Conversion, without the complications.</h2></div>
+        <div class="info-item"><span class="info-number">01</span><div><h3>Published rates</h3><p>Daily reference data from <a href="https://frankfurter.dev/" target="_blank" rel="noopener noreferrer">Frankfurter</a>.</p></div></div>
+        <div class="info-item"><span class="info-number">02</span><div><h3>Instant math</h3><p>Change your amount; see the calculation immediately.</p></div></div>
+        <div class="info-item"><span class="info-number">03</span><div><h3>Made to share</h3><p>Copy a result or share this webpage with a friend.</p></div></div>
+      </section>
+
+      <footer class="site-footer"><span><span class="footer-sparkle" aria-hidden="true">✳</span> Built from a small Python idea, reimagined for the web.</span><span>Rates are indicative, not bank or transaction quotes.</span></footer>
+    </main>
+  </div>
+</body>
+</html>
